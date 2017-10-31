@@ -1,4 +1,4 @@
-﻿namespace PowerGrid.Auction
+﻿namespace PowerGrid.Auctioning
 {
     enum AuctionState
     {

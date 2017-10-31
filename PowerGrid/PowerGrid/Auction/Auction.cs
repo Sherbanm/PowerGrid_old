@@ -4,26 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PowerGrid.Auction
+namespace PowerGrid.Auctioning
 {
     class Auction
     {
-        AuctionState state;
-        Bid CurrentBid;
-        PowerStation PowerStation;
+        public AuctionState State { get; set; }
+
+        public Bid CurrentBid { get; set; }
+
+        public PowerStation PowerStation { get; set; }
 
         List<Bid> Bids;
         
         public Auction(Bid startingBig, PowerStation powerStation)
         {
-            state = AuctionState.Started;
+            State = AuctionState.Started;
             Bids = new List<Bid>();
             PowerStation = powerStation;
             CurrentBid = startingBig;
 
         }
 
-        void Bid(Bid bid)
+        public void Bid(Bid bid)
         {
             if (bid.Value > CurrentBid.Value)
             {
@@ -32,9 +34,11 @@ namespace PowerGrid.Auction
             }
         }
 
-        void ResolveAuction()
+        public void ResolveAuction()
         {
             CurrentBid.Player.ReceiveStation(PowerStation);
+            CurrentBid.Player.Money -= CurrentBid.Value;
+            CurrentBid.Player.CanBuy = false;
         }
     }
 }
